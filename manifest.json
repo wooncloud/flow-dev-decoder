@@ -1,0 +1,36 @@
+{
+  "name": "flow dev decoder",
+  "version": "0.0.1",
+  "author": "wooncloud",
+  "description": "플로우 데브 디코더",
+  "background": {
+    "service_worker": "background/background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_icon": "assets/icons/icon32.png"
+  },
+  "content_scripts": [],
+  "icons": {
+    "32": "assets/icons/icon32.png",
+    "192": "assets/icons/icon192.png"
+  },
+  "optional_host_permissions": [
+    "*://*/*"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "lib/*/*",
+        "content/module/*/*"
+      ],
+      "matches": [
+        "https://*.flow.team/*",
+        "https://*.morningmate.com/*",
+        "https://*.flowtest.info/*"
+      ]
+    }
+  ],
+  "manifest_version": 3
+}

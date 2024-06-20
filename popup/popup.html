@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="/lib/atom-one-dark.min.css">
+	<script src="/lib/highlight.min.js"></script>
+	<script src="/lib/languages/json.min.js"></script>
+	<link href="./popup.css" rel="stylesheet">
+	<script src="./popup.js" type="module" defer></script>
+	<title>flow dev decoder</title>
+</head>
+
+<body>
+	<header>
+		<h2>flow dev decoder</h2>
+		<a href="http://wooncloud.tistory.com" target="_blank" rel="noopener noreferrer">
+			개발자 블로그
+		</a>
+	</header>
+	<section>
+		<div>	
+			<textarea id="textarea" placeholder="%7B%22USER_ID%22%3A%22wooncloud%22%2C%22RGSN_DTTM%22%3A%22FLOW_9Dv6KGp9iTH0i8AtMbiG6FFUKJtoRIp7mN6WFWXndJm6XSgL3whQjekBc7C%252B4zzWpXcmB5Uiz5jPExK2C8u8ZQ%253D%253D%22%2C%22COLABO_SRNO%22%3A%22315148%22%7D"></textarea>
+			<pre id="jsonOutputContainer" style="display: none;">
+				<code id="jsonOutput" class="json"></code>
+			</pre>
+		</div>
+	</section>
+	<footer>
+		<div>
+			<input type="button" value="copy" id="copy">
+		</div>
+		<div>
+			<span id="status"></span>
+		</div>
+		<div>
+			<input type="button" value="reset" id="reset">
+			<input type="button" value="decoding" id="decoding">
+		</div>
+	</footer>
+</body>
+
+</html>
