@@ -26,7 +26,8 @@ header {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	background-color: lavender;
+	background-color: #2c2a34;
+	color: white;
 	height: 3rem;
 	padding: 0 1rem;
 }
@@ -34,12 +35,13 @@ header {
 header > a {
 	padding: 0.25rem 0.5rem;
 	text-decoration: none;
-	color: dimgray;
+	color: white;
 	font-weight: bold;
 }
 
 header > a:hover {
 	text-decoration: underline;
+	color: dodgerblue;
 }
 
 section {
@@ -63,6 +65,10 @@ section>div>textarea#textarea {
 	font-family: monospace;
 }
 
+section>div>textarea#textarea::placeholder {
+	color: lightgray;
+}
+
 pre#jsonOutputContainer {
 	display: flex;
 	width: 100%;
@@ -76,13 +82,15 @@ code#jsonOutput {
 	border-radius: 6px;
 	font-family: monospace;
 	font-size: medium;
+	width: 100%;
 }
 
 footer {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	background-color: lavender;
+	background-color: #2c2a34;
+	color: white;
 	height: 3rem;
 	padding: 0 1rem;
 }
@@ -98,12 +106,12 @@ input[type="button"] {
 }
 
 input[type="button"]:hover {
-	background-color: #b3dcff;
+	background-color: lavender;
 }
 
 input[type="button"]:active {
-	background-color: dodgerblue;
-	color: white ;
+	background-color: #6449fc;
+	color: white;
 }
 
 span#status {
