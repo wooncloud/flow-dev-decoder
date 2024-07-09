@@ -1,6 +1,6 @@
 {
   "name": "flow dev decoder",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "wooncloud",
   "description": "플로우 데브 디코더",
   "background": {
@@ -18,19 +18,6 @@
   },
   "optional_host_permissions": [
     "*://*/*"
-  ],
-  "web_accessible_resources": [
-    {
-      "resources": [
-        "lib/*/*",
-        "content/module/*/*"
-      ],
-      "matches": [
-        "https://*.flow.team/*",
-        "https://*.morningmate.com/*",
-        "https://*.flowtest.info/*"
-      ]
-    }
   ],
   "manifest_version": 3
 }
