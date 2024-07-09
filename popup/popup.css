@@ -117,5 +117,5 @@ input[type="button"]:active {
 span#status {
 	font-size: small;
 	font-weight: bold;
-	color: dimgray;
+	color: lightgray;
 }

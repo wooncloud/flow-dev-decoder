@@ -9,6 +9,10 @@ const jsonOutput = document.getElementById("jsonOutput");
 const statusLabel = document.getElementById("status");
 let statusSetTimeoutAttr;
 
+document.addEventListener("DOMContentLoaded", () => {
+    textarea.focus();
+});
+
 const showStatus = (msg) => {
     const RESET_TIME = 2000;
     if (msg !== statusLabel.innerText) {
