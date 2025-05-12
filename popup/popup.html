@@ -13,9 +13,11 @@
 	<title>flow dev decoder</title>
 </head>
 
-<body>
+<body class="dark-theme">
 	<header>
-		<h2>flow dev decoder</h2>
+		<h2>
+			flow dev decoder
+		</h2>
 		<a href="http://wooncloud.tistory.com" target="_blank" rel="noopener noreferrer">
 			개발자 블로그
 		</a>
@@ -27,17 +29,24 @@
 				<code id="jsonOutput" class="json"></code>
 			</pre>
 		</div>
+		<div id="status"></div>
 	</section>
 	<footer>
 		<div>
-			<input type="button" value="copy" id="copy">
+			<button id="reset" class="icon-button">
+				<img src="../assets/icons/clear.svg" alt="초기화" class="icon">
+				<span>clear</span>
+			</button>
 		</div>
-		<div>
-			<span id="status"></span>
-		</div>
-		<div>
-			<input type="button" value="clear" id="reset">
-			<input type="button" value="decoding" id="decoding">
+		<div style="display: flex; gap: .25rem;">
+			<button id="copy" class="icon-button">
+				<img src="../assets/icons/copy.svg" alt="복사" class="icon">
+				<span>copy</span>
+			</button>
+			<button id="decoding" class="icon-button">
+				<img src="../assets/icons/binary.svg" alt="디코딩" class="icon">
+				<span>decoding</span>
+			</button>
 		</div>
 	</footer>
 </body>
