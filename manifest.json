@@ -1,6 +1,6 @@
 {
   "name": "flow dev decoder",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "author": "wooncloud",
   "description": "플로우 데브 디코더",
   "background": {
