@@ -118,4 +118,14 @@ elements.reset.addEventListener('click', () => {
   elements.textarea.value = '';
   elements.jsonOutput.textContent = '';
   toggleOutput(false);
+});
+
+// textarea에서 키보드 단축키 처리
+elements.textarea.addEventListener('keydown', (event) => {
+  // Windows/Linux: Control + Enter
+  // Mac: Cmd + Enter
+  if (event.key === 'Enter' && (event.ctrlKey || event.metaKey)) {
+    event.preventDefault(); // 기본 동작 방지
+    decodeAndFormatJSON();
+  }
 });    
