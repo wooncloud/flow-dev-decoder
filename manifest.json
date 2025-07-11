@@ -19,5 +19,6 @@
   "optional_host_permissions": [
     "*://*/*"
   ],
+  "permissions": ["storage"],
   "manifest_version": 3
 }
