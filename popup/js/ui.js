@@ -2,6 +2,32 @@ import { elements } from './elements.js';
 import { STATUS_DISPLAY_TIME, STORAGE_KEYS } from './constants.js';
 
 let statusTimeoutId = null;
+let hideStatusTimer = null;
+
+/**
+ * 스토리지 상태 표시기를 업데이트하는 함수
+ * @param {'saving' | 'saved' | 'hidden'} status 
+ */
+export const updateStorageStatus = (status) => {
+  const indicator = elements.storageStatusIndicator;
+  
+  if (hideStatusTimer) {
+    clearTimeout(hideStatusTimer);
+    hideStatusTimer = null;
+  }
+  
+  indicator.className = '';
+
+  if (status === 'saving' || status === 'saved') {
+    indicator.classList.add(status);
+  }
+
+  if (status === 'saved') {
+    hideStatusTimer = setTimeout(() => {
+      indicator.className = '';
+    }, 1000);
+  }
+};
 
 /**
  * 상태 메시지를 표시하는 함수

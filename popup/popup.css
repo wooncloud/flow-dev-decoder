@@ -145,3 +145,24 @@ div#status {
     text-align: center;
     display: none;
 }
+
+#storage-status-indicator {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-left: 8px;
+  vertical-align: middle;
+  transition: background-color 0.3s ease, opacity 0.5s ease;
+  opacity: 0;
+}
+
+#storage-status-indicator.saving {
+  background-color: #ffeb3b; /* Yellow */
+  opacity: 1;
+}
+
+#storage-status-indicator.saved {
+  background-color: #4caf50; /* Green */
+  opacity: 1;
+}

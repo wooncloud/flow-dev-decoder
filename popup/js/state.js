@@ -1,4 +1,5 @@
 import { STORAGE_KEYS, SAVE_DEBOUNCE_DELAY } from './constants.js';
+import { updateStorageStatus } from './ui.js';
 
 let saveDebounceTimer = null;
 
@@ -61,9 +62,12 @@ class StateManager {
     saveDebounceTimer = setTimeout(async () => {
       try {
         await chrome.storage.session.set(newState);
+        // '저장 완료' 상태로 변경
+        updateStorageStatus('saved');
       } catch (error) {
         console.error('상태 저장 실패:', error);
-        // 여기서 발생하는 에러는 사용자에게 직접적인 피드백이 어려울 수 있으므로 콘솔에만 기록합니다.
+        // 실패 시 상태 표시기 숨김
+        updateStorageStatus('hidden');
       }
       saveDebounceTimer = null;
     }, SAVE_DEBOUNCE_DELAY);

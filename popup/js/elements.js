@@ -6,5 +6,6 @@ export const elements = {
   textarea: document.getElementById("textarea"),
   jsonOutputContainer: document.getElementById("jsonOutputContainer"),
   jsonOutput: document.getElementById("jsonOutput"),
-  statusLabel: document.getElementById("status")
+  statusLabel: document.getElementById("status"),
+  storageStatusIndicator: document.getElementById("storage-status-indicator")
 }; 

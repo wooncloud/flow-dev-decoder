@@ -1,6 +1,6 @@
 import { elements } from './elements.js';
 import { stateManager } from './state.js';
-import { showStatus, toggleOutput } from './ui.js';
+import { showStatus, toggleOutput, updateStorageStatus } from './ui.js';
 import { STORAGE_KEYS } from './constants.js';
 
 /**
@@ -26,12 +26,14 @@ const decodeAndFormatJSON = async () => {
     hljs.highlightElement(elements.jsonOutput);
     toggleOutput(true);
     
+    updateStorageStatus('saving');
     await stateManager.update({
       [STORAGE_KEYS.ORIGINAL_INPUT]: originalInput,
       [STORAGE_KEYS.CURRENT_TEXT]: formattedJSON,
       [STORAGE_KEYS.IS_DECODED]: true,
       [STORAGE_KEYS.HAS_RESULT]: true
     });
+    updateStorageStatus('saved');
     
   } catch (error) {
     showStatus(`오류: ${error.message}`);
@@ -41,14 +43,17 @@ const decodeAndFormatJSON = async () => {
       const decodedData = decodeURIComponent(elements.textarea.value);
       elements.textarea.value = decodedData;
       
+      updateStorageStatus('saving');
       await stateManager.update({
         [STORAGE_KEYS.ORIGINAL_INPUT]: originalInput,
         [STORAGE_KEYS.CURRENT_TEXT]: decodedData,
         [STORAGE_KEYS.IS_DECODED]: false,
         [STORAGE_KEYS.HAS_RESULT]: false
       });
+      updateStorageStatus('saved');
     } catch (e) {
       showStatus('디코딩 실패');
+      updateStorageStatus('hidden');
     }
   }
 };
@@ -76,14 +81,20 @@ export const initializeEventListeners = () => {
       elements.textarea.value = '';
       elements.jsonOutput.textContent = '';
       toggleOutput(false);
+      updateStorageStatus('saving');
       await stateManager.clear();
+      updateStorageStatus('saved');
       showStatus('상태가 초기화되었습니다');
     } catch (error) {
       showStatus(error.message);
+      updateStorageStatus('hidden');
     }
   });
 
   elements.textarea.addEventListener('input', () => {
+    // '저장 중' 상태로 UI 업데이트
+    updateStorageStatus('saving');
+
     const state = stateManager.get();
     const currentValue = elements.textarea.value;
     
