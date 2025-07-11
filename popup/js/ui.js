@@ -25,7 +25,7 @@ export const updateStorageStatus = (status) => {
   if (status === 'saved') {
     hideStatusTimer = setTimeout(() => {
       indicator.className = '';
-    }, 1000);
+    }, STATUS_DISPLAY_TIME);
   }
 };
 

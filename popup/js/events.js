@@ -36,7 +36,17 @@ const decodeAndFormatJSON = async () => {
     updateStorageStatus('saved');
     
   } catch (error) {
-    showStatus(`오류: ${error.message}`);
+    if (error instanceof URIError) {
+      showStatus('URL 디코딩에 실패했습니다. 입력값을 확인해주세요.');
+      updateStorageStatus('hidden');
+      return;
+    }
+    
+    if (error instanceof SyntaxError) {
+      showStatus('잘못된 JSON 형식입니다. 내용을 확인해주세요.');
+    } else {
+      showStatus('데이터 처리 중 오류가 발생했습니다.');
+    }
     
     try {
       const originalInput = elements.textarea.value;

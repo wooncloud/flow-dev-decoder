@@ -1,5 +1,5 @@
 // 상태 표시 관련 변수 및 설정
-export const STATUS_DISPLAY_TIME = 2000;
+export const STATUS_DISPLAY_TIME = 1000;
 
 // 디바운싱을 위한 타이머 설정
 export const SAVE_DEBOUNCE_DELAY = 300;
