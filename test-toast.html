@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toast System Test</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #1e1e1e;
+            color: #e0e0e0;
+            line-height: 1.6;
+        }
+        .test-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #252525;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+        }
+        h1 {
+            color: #64b5f6;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .test-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #2c2a34;
+            border-radius: 8px;
+        }
+        .test-section h2 {
+            color: #90caf9;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+        .button-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        button {
+            background: #333;
+            border: 1px solid #444;
+            color: #e0e0e0;
+            padding: 10px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+        button:hover {
+            background: #444;
+        }
+        button:active {
+            background: #6449fc;
+            color: white;
+        }
+        .success { background: #4caf50 !important; }
+        .error { background: #f44336 !important; }
+        .warning { background: #ff9800 !important; }
+        .info { background: #2196f3 !important; }
+        
+        .demo-status {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 6px;
+            border-left: 4px solid #64b5f6;
+        }
+        
+        textarea {
+            width: 100%;
+            height: 100px;
+            background: #333;
+            border: 1px solid #444;
+            color: #e0e0e0;
+            padding: 10px;
+            border-radius: 6px;
+            resize: vertical;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🚀 Superior Toast System Test</h1>
+        <p style="text-align: center; opacity: 0.8; margin-bottom: 40px;">
+            ChatGPT가 만든 기본 토스트 vs. Claude의 전문가급 토스트 시스템
+        </p>
+
+        <div class="test-section">
+            <h2>📱 기본 토스트 타입</h2>
+            <div class="button-group">
+                <button class="success" onclick="testToast.success('성공적으로 완료되었습니다!')">Success</button>
+                <button class="error" onclick="testToast.error('오류가 발생했습니다')">Error</button>
+                <button class="warning" onclick="testToast.warning('주의가 필요합니다')">Warning</button>
+                <button class="info" onclick="testToast.info('정보를 확인하세요')">Info</button>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h2>⚡ 액션 버튼이 있는 토스트</h2>
+            <div class="button-group">
+                <button onclick="showActionToast()">액션 버튼 토스트</button>
+                <button onclick="showConfirmToast()">확인 토스트</button>
+                <button onclick="showRetryToast()">재시도 토스트</button>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h2>🔄 특수 기능 토스트</h2>
+            <div class="button-group">
+                <button onclick="showProgressToast()">진행 상황</button>
+                <button onclick="showPersistentToast()">지속성 토스트</button>
+                <button onclick="showMultipleToasts()">다중 토스트</button>
+                <button onclick="testToast.dismissAll()">모두 닫기</button>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h2>📋 실제 사용 사례</h2>
+            <textarea id="testData" placeholder="여기에 테스트할 데이터를 입력하세요...">%7B%22message%22%3A%22Hello%20World%22%2C%22timestamp%22%3A%222025-08-08%22%7D</textarea>
+            <div class="button-group" style="margin-top: 10px;">
+                <button onclick="simulateCopy()">복사 시뮬레이션</button>
+                <button onclick="simulateDecode()">디코딩 시뮬레이션</button>
+                <button onclick="simulateError()">에러 시뮬레이션</button>
+                <button onclick="simulateStorage()">저장 시뮬레이션</button>
+            </div>
+        </div>
+
+        <div class="demo-status">
+            <h3>✨ Superior Features:</h3>
+            <ul>
+                <li><strong>지능형 대기열 시스템</strong> - 최대 5개 토스트 동시 관리</li>
+                <li><strong>접근성 지원</strong> - 스크린 리더 및 키보드 내비게이션</li>
+                <li><strong>스마트 애니메이션</strong> - GPU 가속 및 성능 최적화</li>
+                <li><strong>액션 시스템</strong> - 인터랙티브 버튼과 콜백</li>
+                <li><strong>타입 지원</strong> - TypeScript 스타일 JSDoc</li>
+                <li><strong>반응형 디자인</strong> - 모바일/데스크톱 적응형</li>
+                <li><strong>진행 표시기</strong> - 시각적 타이머와 hover pause</li>
+                <li><strong>Glassmorphism UI</strong> - 현대적 블러 효과</li>
+            </ul>
+        </div>
+    </div>
+
+    <script type="module">
+        import toast from './popup/js/toast-system.js';
+        
+        // Global test object
+        window.testToast = toast;
+        
+        // Action toast examples
+        window.showActionToast = () => {
+            toast.success('파일이 저장되었습니다', {
+                duration: 0,
+                actions: [
+                    {
+                        label: '열기',
+                        handler: () => toast.info('파일을 열고 있습니다...')
+                    },
+                    {
+                        label: '공유',
+                        handler: () => toast.info('공유 옵션을 표시합니다')
+                    }
+                ]
+            });
+        };
+        
+        window.showConfirmToast = () => {
+            const confirmId = toast.warning('정말로 삭제하시겠습니까?', {
+                duration: 0,
+                actions: [
+                    {
+                        label: '취소',
+                        handler: () => toast.dismiss(confirmId)
+                    },
+                    {
+                        label: '삭제',
+                        handler: () => {
+                            toast.dismiss(confirmId);
+                            toast.success('삭제되었습니다', { duration: 1000 });
+                        }
+                    }
+                ]
+            });
+        };
+        
+        window.showRetryToast = () => {
+            let attempts = 0;
+            const maxAttempts = 3;
+            
+            const tryAction = () => {
+                attempts++;
+                if (attempts < maxAttempts) {
+                    toast.error(`연결 실패 (시도 ${attempts}/${maxAttempts})`, {
+                        actions: [{
+                            label: '다시 시도',
+                            handler: tryAction
+                        }]
+                    });
+                } else {
+                    toast.error('최대 시도 횟수를 초과했습니다');
+                }
+            };
+            
+            tryAction();
+        };
+        
+        window.showProgressToast = () => {
+            const progressId = toast.info('업로드 중... (취소 불가)', {
+                persistent: true,
+                dismissible: false
+            });
+            
+            setTimeout(() => {
+                toast.dismiss(progressId);
+                toast.success('업로드 완료!', { duration: 1000 });
+            }, 3000);
+        };
+        
+        window.showPersistentToast = () => {
+            toast.error('중요한 알림: 수동으로 닫아야 합니다', {
+                duration: 0,
+                actions: [{
+                    label: '확인',
+                    handler: (toastId) => toast.dismiss(toastId)
+                }]
+            });
+        };
+        
+        window.showMultipleToasts = () => {
+            toast.info('첫 번째 토스트');
+            setTimeout(() => toast.success('두 번째 토스트'), 200);
+            setTimeout(() => toast.warning('세 번째 토스트'), 400);
+            setTimeout(() => toast.error('네 번째 토스트'), 600);
+            setTimeout(() => toast.info('다섯 번째 토스트'), 800);
+            setTimeout(() => toast.success('여섯 번째 토스트 (대기열 초과)'), 1000);
+        };
+        
+        // Real-world simulations
+        window.simulateCopy = () => {
+            const data = document.getElementById('testData').value;
+            if (!data.trim()) {
+                toast.warning('복사할 내용이 없습니다', {
+                    actions: [{
+                        label: '예시 추가',
+                        handler: () => {
+                            document.getElementById('testData').value = '{"example": "data"}';
+                        }
+                    }]
+                });
+                return;
+            }
+            
+            navigator.clipboard.writeText(data).then(() => {
+                toast.success('클립보드에 복사되었습니다', {
+                    duration: 1000,
+                    actions: [{
+                        label: '되돌리기',
+                        handler: () => toast.info('실행 취소 기능은 준비 중입니다')
+                    }]
+                });
+            });
+        };
+        
+        window.simulateDecode = () => {
+            const data = document.getElementById('testData').value;
+            if (!data.trim()) {
+                toast.warning('디코딩할 데이터가 없습니다');
+                return;
+            }
+            
+            const progressId = toast.info('디코딩 중...', {
+                persistent: true,
+                dismissible: false
+            });
+            
+            setTimeout(() => {
+                try {
+                    const decoded = decodeURIComponent(data);
+                    JSON.parse(decoded); // Validate JSON
+                    
+                    toast.dismiss(progressId);
+                    toast.success('디코딩이 완료되었습니다', {
+                        duration: 1000,
+                        actions: [{
+                            label: '결과 보기',
+                            handler: () => {
+                                document.getElementById('testData').value = decoded;
+                                toast.info('결과가 텍스트 영역에 표시되었습니다');
+                            }
+                        }]
+                    });
+                } catch (error) {
+                    toast.dismiss(progressId);
+                    toast.error('디코딩 실패: 잘못된 형식입니다', {
+                        actions: [{
+                            label: '다시 시도',
+                            handler: () => window.simulateDecode()
+                        }]
+                    });
+                }
+            }, 1000);
+        };
+        
+        window.simulateError = () => {
+            toast.error('네트워크 연결 오류', {
+                duration: 0,
+                actions: [
+                    {
+                        label: '재시도',
+                        handler: () => toast.info('연결을 재시도하고 있습니다...')
+                    },
+                    {
+                        label: '오프라인 모드',
+                        handler: () => toast.success('오프라인 모드로 전환되었습니다')
+                    }
+                ]
+            });
+        };
+        
+        window.simulateStorage = () => {
+            toast.info('저장 중...', { persistent: true, dismissible: false });
+            
+            setTimeout(() => {
+                toast.dismissAll();
+                toast.success('저장되었습니다', {
+                    duration: 1000,
+                    actions: [{
+                        label: '확인',
+                        handler: () => toast.info('저장이 확인되었습니다')
+                    }]
+                });
+            }, 1500);
+        };
+        
+        // Welcome message
+        setTimeout(() => {
+            toast.success('🎉 Superior Toast System이 로드되었습니다!', {
+                duration: 2000,
+                actions: [{
+                    label: '테스트 시작',
+                    handler: () => toast.info('버튼들을 클릭해서 토스트 기능을 테스트해보세요!')
+                }]
+            });
+        }, 500);
+    </script>
+</body>
+</html>
