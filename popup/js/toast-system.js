@@ -38,8 +38,14 @@ class ToastManager {
       duration: this.defaultDuration,
       persistent: false,
       dismissible: true,
+      replace: false, // 기존 토스트들을 제거하고 새로운 토스트 표시
       ...options
     };
+
+    // replace 옵션이 true이면 기존 토스트들을 즉시 제거
+    if (config.replace) {
+      this.clearAllImmediately();
+    }
 
     const toast = this.createToast(message, config);
     this.addToast(toast);
@@ -49,19 +55,19 @@ class ToastManager {
 
   // Convenience methods
   success(message, options = {}) {
-    return this.show(message, { ...options, type: 'success' });
+    return this.show(message, { ...options, type: 'success', replace: true });
   }
 
   error(message, options = {}) {
-    return this.show(message, { ...options, type: 'error', duration: 2000 });
+    return this.show(message, { ...options, type: 'error', duration: 2000, replace: true });
   }
 
   warning(message, options = {}) {
-    return this.show(message, { ...options, type: 'warning', duration: 1500 });
+    return this.show(message, { ...options, type: 'warning', duration: 1500, replace: true });
   }
 
   info(message, options = {}) {
-    return this.show(message, { ...options, type: 'info' });
+    return this.show(message, { ...options, type: 'info', replace: true });
   }
 
   createToast(message, config) {
@@ -185,6 +191,21 @@ class ToastManager {
 
   dismissAll() {
     Array.from(this.toasts.keys()).forEach(id => this.dismiss(id));
+  }
+
+  /**
+   * 모든 토스트를 즉시 제거 (애니메이션 없음)
+   */
+  clearAllImmediately() {
+    this.toasts.forEach(toast => {
+      if (toast.timer) {
+        clearTimeout(toast.timer);
+      }
+      if (toast.element.parentNode) {
+        toast.element.parentNode.removeChild(toast.element);
+      }
+    });
+    this.toasts.clear();
   }
 
   // Removed getRemainingTime method - not needed without progress bars

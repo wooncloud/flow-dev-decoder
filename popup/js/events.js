@@ -9,8 +9,6 @@ import { STORAGE_KEYS } from './constants.js';
  * @returns {Promise<void>}
  */
 const decodeAndFormatJSON = async () => {
-  let progressToastId = null;
-  
   try {
     const SPACE_COUNT = 4;
     const encodedData = elements.textarea.value;
@@ -21,7 +19,7 @@ const decodeAndFormatJSON = async () => {
     }
     
     // Show progress for longer operations
-    progressToastId = toastUtils.decodingProgress();
+    toastUtils.decodingProgress();
     
     const originalInput = encodedData;
     const decodedData = decodeURIComponent(encodedData);
@@ -42,13 +40,11 @@ const decodeAndFormatJSON = async () => {
     });
     updateStorageStatus('saved');
     
-    // Dismiss progress and show success
-    if (progressToastId) toast.dismiss(progressToastId);
+    // Show success (기존 토스트 자동 교체)
     toastUtils.decodingSuccess();
     
   } catch (error) {
-    // Dismiss progress toast
-    if (progressToastId) toast.dismiss(progressToastId);
+    // Error 토스트가 기존 progress 토스트를 자동 교체
     
     if (error instanceof URIError) {
       toastUtils.decodingError('URL 디코딩에 실패했습니다. 입력값을 확인해주세요.');

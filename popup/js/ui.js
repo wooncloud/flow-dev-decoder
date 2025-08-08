@@ -133,13 +133,14 @@ export const restoreUI = (state) => {
 
 /**
  * Enhanced toast utilities for specific use cases
+ * 개선된 토스트 시스템: 연속 호출 시 기존 토스트를 자동으로 교체
  */
 export const toastUtils = {
   /**
    * Show simple copy success toast
    */
   copySuccess: (message = '클립보드에 복사되었습니다') => {
-    return toast.success(message);
+    return toast.success(message); // 기본적으로 replace: true
   },
 
   /**
@@ -148,7 +149,8 @@ export const toastUtils = {
   decodingProgress: () => {
     return toast.info('디코딩 중...', {
       persistent: true,
-      dismissible: false
+      dismissible: false,
+      replace: true // progress도 기존 토스트를 교체
     });
   },
 
@@ -156,14 +158,14 @@ export const toastUtils = {
    * Show simple decoding success
    */
   decodingSuccess: (message = '디코딩이 완료되었습니다') => {
-    return toast.success(message);
+    return toast.success(message); // 기본적으로 replace: true
   },
 
   /**
    * Show simple error message
    */
   decodingError: (message) => {
-    return toast.error(message);
+    return toast.error(message); // 기본적으로 replace: true
   },
 
   /**
@@ -177,7 +179,7 @@ export const toastUtils = {
     };
     
     const { type, message: msg } = config[status] || config.saved;
-    return toast[type](msg, { duration: 1000 });
+    return toast[type](msg, { duration: 1000 }); // 기본적으로 replace: true
   }
 };
 
