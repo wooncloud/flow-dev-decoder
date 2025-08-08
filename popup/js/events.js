@@ -16,15 +16,7 @@ const decodeAndFormatJSON = async () => {
     const encodedData = elements.textarea.value;
     
     if (!encodedData.trim()) {
-      toast.warning('입력 값이 없습니다', {
-        actions: [{
-          label: '예시 붙여넣기',
-          handler: () => {
-            elements.textarea.value = '%7B%22USER_ID%22%3A%22wooncloud%22%2C%22message%22%3A%22Hello%20World%22%7D';
-            elements.textarea.focus();
-          }
-        }]
-      });
+      toast.warning('입력 값이 없습니다');
       return;
     }
     
@@ -59,18 +51,15 @@ const decodeAndFormatJSON = async () => {
     if (progressToastId) toast.dismiss(progressToastId);
     
     if (error instanceof URIError) {
-      toastUtils.decodingError('URL 디코딩에 실패했습니다. 입력값을 확인해주세요.', () => {
-        elements.textarea.focus();
-        elements.textarea.select();
-      });
+      toastUtils.decodingError('URL 디코딩에 실패했습니다. 입력값을 확인해주세요.');
       updateStorageStatus('hidden');
       return;
     }
     
     if (error instanceof SyntaxError) {
-      toastUtils.decodingError('잘못된 JSON 형식입니다. 내용을 확인해주세요.', () => decodeAndFormatJSON());
+      toastUtils.decodingError('잘못된 JSON 형식입니다. 내용을 확인해주세요.');
     } else {
-      toastUtils.decodingError('데이터 처리 중 오류가 발생했습니다.', () => decodeAndFormatJSON());
+      toastUtils.decodingError('데이터 처리 중 오류가 발생했습니다.');
     }
     
     try {
@@ -104,15 +93,7 @@ export const initializeEventListeners = () => {
   elements.copy.addEventListener('click', async () => {
     const text = elements.textarea.value.trim();
     if (!text) {
-      toast.warning('복사할 내용이 없습니다', {
-        actions: [{
-          label: '예시 데이터 생성',
-          handler: () => {
-            elements.textarea.value = '{"example": "data", "timestamp": "' + new Date().toISOString() + '"}';
-            elements.textarea.focus();
-          }
-        }]
-      });
+      toast.warning('복사할 내용이 없습니다');
       return;
     }
     
@@ -131,16 +112,7 @@ export const initializeEventListeners = () => {
         document.execCommand('copy');
         toastUtils.copySuccess();
       } catch (fallbackError) {
-        toast.error('복사 실패: 브라우저가 클립보드 접근을 지원하지 않습니다', {
-          duration: 2000,
-          actions: [{
-            label: '수동 복사',
-            handler: () => {
-              textArea.select();
-              toast.info('Ctrl+C 또는 Cmd+C를 눌러 복사하세요');
-            }
-          }]
-        });
+        toast.error('복사 실패');
       } finally {
         document.body.removeChild(textArea);
       }
@@ -148,46 +120,20 @@ export const initializeEventListeners = () => {
   });
 
   elements.reset.addEventListener('click', async () => {
-    // Confirm before clearing with action toast
-    const confirmToastId = toast.warning('모든 내용을 초기화하시겠습니까?', {
-      duration: 0,
-      actions: [
-        {
-          label: '취소',
-          handler: () => toast.dismiss(confirmToastId)
-        },
-        {
-          label: '초기화',
-          handler: async () => {
-            toast.dismiss(confirmToastId);
-            
-            try {
-              elements.textarea.value = '';
-              elements.jsonOutput.textContent = '';
-              toggleOutput(false);
-              updateStorageStatus('saving');
-              await stateManager.clear();
-              updateStorageStatus('saved');
-              
-              toast.success('상태가 초기화되었습니다', {
-                duration: 1000,
-                actions: [{
-                  label: '되돌리기',
-                  handler: () => {
-                    toast.info('되돌리기 기능은 곧 추가될 예정입니다');
-                  }
-                }]
-              });
-              
-              elements.textarea.focus();
-            } catch (error) {
-              toast.error(`초기화 실패: ${error.message}`);
-              updateStorageStatus('hidden');
-            }
-          }
-        }
-      ]
-    });
+    try {
+      elements.textarea.value = '';
+      elements.jsonOutput.textContent = '';
+      toggleOutput(false);
+      updateStorageStatus('saving');
+      await stateManager.clear();
+      updateStorageStatus('saved');
+      
+      toast.success('상태가 초기화되었습니다');
+      elements.textarea.focus();
+    } catch (error) {
+      toast.error(`초기화 실패: ${error.message}`);
+      updateStorageStatus('hidden');
+    }
   });
 
   elements.textarea.addEventListener('input', () => {

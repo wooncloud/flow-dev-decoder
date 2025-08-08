@@ -28,7 +28,7 @@ class ToastManager {
   }
 
   /**
-   * Show toast with comprehensive options
+   * Show simple toast notification
    * @param {string} message - Toast message
    * @param {object} options - Configuration options
    */
@@ -37,7 +37,6 @@ class ToastManager {
       type: 'info', // success, error, warning, info
       duration: this.defaultDuration,
       persistent: false,
-      actions: [],
       dismissible: true,
       ...options
     };
@@ -92,18 +91,7 @@ class ToastManager {
     const actionsContainer = document.createElement('div');
     actionsContainer.className = 'toast-actions';
 
-    // Custom actions
-    config.actions.forEach(action => {
-      const button = document.createElement('button');
-      button.className = 'toast-action';
-      button.textContent = action.label;
-      button.onclick = (e) => {
-        e.stopPropagation();
-        if (action.handler) action.handler();
-        if (!action.keepOpen) this.dismiss(id);
-      };
-      actionsContainer.appendChild(button);
-    });
+    // Actions removed for cleaner UX
 
     // Dismiss button
     if (config.dismissible) {
@@ -115,21 +103,12 @@ class ToastManager {
       actionsContainer.appendChild(dismissBtn);
     }
 
-    if (actionsContainer.children.length > 0) {
+    // Only add dismiss button if dismissible
+    if (config.dismissible && actionsContainer.children.length > 0) {
       content.appendChild(actionsContainer);
     }
 
-    // Progress bar for non-persistent toasts
-    if (!config.persistent && config.duration > 0) {
-      const progressBar = document.createElement('div');
-      progressBar.className = 'toast-progress';
-      toastElement.appendChild(progressBar);
-      
-      // Animate progress bar
-      setTimeout(() => {
-        progressBar.style.transform = 'scaleX(0)';
-      }, 100);
-    }
+    // No progress bar - simplified design
 
     toastElement.appendChild(content);
 
@@ -145,21 +124,7 @@ class ToastManager {
       toast.timer = setTimeout(() => this.dismiss(id), config.duration);
     }
 
-    // Pause timer on hover
-    if (toast.timer) {
-      toastElement.addEventListener('mouseenter', () => {
-        if (toast.timer) {
-          clearTimeout(toast.timer);
-          toastElement.querySelector('.toast-progress')?.style.setProperty('animation-play-state', 'paused');
-        }
-      });
-
-      toastElement.addEventListener('mouseleave', () => {
-        const remaining = this.getRemainingTime(toastElement);
-        toast.timer = setTimeout(() => this.dismiss(id), remaining);
-        toastElement.querySelector('.toast-progress')?.style.setProperty('animation-play-state', 'running');
-      });
-    }
+    // Simple timer without hover pause for better UX
 
     return toast;
   }
@@ -222,22 +187,7 @@ class ToastManager {
     Array.from(this.toasts.keys()).forEach(id => this.dismiss(id));
   }
 
-  getRemainingTime(element) {
-    const progress = element.querySelector('.toast-progress');
-    if (!progress) return 0;
-    
-    const style = getComputedStyle(progress);
-    const duration = parseFloat(style.transitionDuration) * 1000;
-    const transform = style.transform;
-    
-    if (transform && transform.includes('matrix')) {
-      const matrix = transform.match(/matrix.*\((.+)\)/)[1].split(', ');
-      const scaleX = parseFloat(matrix[0]);
-      return duration * scaleX;
-    }
-    
-    return duration;
-  }
+  // Removed getRemainingTime method - not needed without progress bars
 
   injectStyles() {
     if (document.getElementById('toast-styles')) return;
@@ -266,20 +216,17 @@ class ToastManager {
         border: 1px solid rgba(255, 255, 255, 0.08);
         overflow: hidden;
         position: relative;
-        transform: translateX(100%) scale(0.95);
         opacity: 0;
-        transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        transition: opacity 0.2s ease;
       }
 
       .toast-enter {
-        transform: translateX(0) scale(1);
         opacity: 1;
       }
 
       .toast-exit {
-        transform: translateX(100%) scale(0.9);
         opacity: 0;
-        transition: all 0.25s ease-in;
+        transition: opacity 0.2s ease;
       }
 
       .toast-content {
@@ -376,32 +323,7 @@ class ToastManager {
         transform: scale(1.1);
       }
 
-      .toast-progress {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        height: 2px;
-        width: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2));
-        transform-origin: left;
-        transition: transform linear;
-      }
-
-      .toast-success .toast-progress {
-        background: linear-gradient(90deg, rgba(76, 175, 80, 0.3), rgba(76, 175, 80, 0.6));
-      }
-
-      .toast-error .toast-progress {
-        background: linear-gradient(90deg, rgba(244, 67, 54, 0.3), rgba(244, 67, 54, 0.6));
-      }
-
-      .toast-warning .toast-progress {
-        background: linear-gradient(90deg, rgba(255, 152, 0, 0.3), rgba(255, 152, 0, 0.6));
-      }
-
-      .toast-info .toast-progress {
-        background: linear-gradient(90deg, rgba(33, 150, 243, 0.3), rgba(33, 150, 243, 0.6));
-      }
+      /* Progress bars removed for cleaner design */
 
       /* Responsive adjustments */
       @media (max-width: 480px) {
@@ -410,29 +332,10 @@ class ToastManager {
           right: 20px;
           max-width: none;
         }
-        
-        .toast {
-          transform: translateY(-100%) scale(0.95);
-        }
-        
-        .toast-enter {
-          transform: translateY(0) scale(1);
-        }
-        
-        .toast-exit {
-          transform: translateY(-100%) scale(0.9);
-        }
       }
     `;
     
-    // Insert styles with proper transition timing
-    const progress = styles.textContent.match(/transition: transform linear;/g);
-    if (progress) {
-      styles.textContent = styles.textContent.replace(
-        'transition: transform linear;',
-        `transition: transform var(--duration, 4s) linear;`
-      );
-    }
+    // Simplified styles - no complex timing
 
     document.head.appendChild(styles);
   }

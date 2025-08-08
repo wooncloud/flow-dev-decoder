@@ -136,21 +136,10 @@ export const restoreUI = (state) => {
  */
 export const toastUtils = {
   /**
-   * Show success toast with action
+   * Show simple copy success toast
    */
   copySuccess: (message = '클립보드에 복사되었습니다') => {
-    return toast.success(message, {
-      duration: 1000,
-      actions: [
-        {
-          label: '되돌리기',
-          handler: () => {
-            // Could implement undo functionality
-            toast.info('되돌리기 기능은 준비 중입니다');
-          }
-        }
-      ]
-    });
+    return toast.success(message);
   },
 
   /**
@@ -164,36 +153,17 @@ export const toastUtils = {
   },
 
   /**
-   * Show decoding result
+   * Show simple decoding success
    */
   decodingSuccess: (message = '디코딩이 완료되었습니다') => {
-    return toast.success(message, {
-      duration: 1000,
-      actions: [
-        {
-          label: '결과 보기',
-          handler: () => {
-            // Scroll to result or focus result area
-            elements.jsonOutputContainer?.scrollIntoView({ behavior: 'smooth' });
-          }
-        }
-      ]
-    });
+    return toast.success(message);
   },
 
   /**
-   * Show error with retry option
+   * Show simple error message
    */
-  decodingError: (message, retryHandler) => {
-    return toast.error(message, {
-      duration: 0, // Persistent until dismissed
-      actions: retryHandler ? [
-        {
-          label: '다시 시도',
-          handler: retryHandler
-        }
-      ] : []
-    });
+  decodingError: (message) => {
+    return toast.error(message);
   },
 
   /**
