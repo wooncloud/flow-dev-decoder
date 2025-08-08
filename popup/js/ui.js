@@ -38,13 +38,15 @@ export const showStatus = (message) => {
     clearTimeout(statusTimeoutId);
     statusTimeoutId = null;
   }
-  
+
   elements.statusLabel.innerText = message;
-  elements.statusLabel.style.display = "block";
-  
+  elements.statusLabel.classList.add('show');
+
   statusTimeoutId = setTimeout(() => {
-    elements.statusLabel.innerText = "";
-    elements.statusLabel.style.display = "none";
+    elements.statusLabel.classList.remove('show');
+    setTimeout(() => {
+      elements.statusLabel.innerText = "";
+    }, 300);
     statusTimeoutId = null;
   }, STATUS_DISPLAY_TIME);
 };
@@ -83,4 +85,4 @@ export const restoreUI = (state) => {
   } else {
     toggleOutput(false);
   }
-}; 
+};
